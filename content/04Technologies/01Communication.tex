@@ -1,0 +1,10 @@
+%!TEX root = ../../dokumentation.tex
+
+Generally speaking, communication can be done synchronously or asynchronously.
+In the context of a microservice architecture, asynchronous communication is highly recommended due to its decoupled and non-blocking nature.
+Although such an event based communication is favorable in distributed systems, as in microservices, synchronous messaging may also be used, if a specific behavior in another service is needed \cite[p~.34f]{Hofmann.2016}\cite[p.~89]{Newman.2015}.
+Consequently, both forms of service communication need to be analyzed separately.
+
+\input{content/04Technologies/01_1SynchronousMessaging.tex}\label{cha:Technologies:communication:synchronous}
+\clearpage
+\input{content/04Technologies/01_2AsynchronousMessaging.tex}\label{cha:Technologies:communication:asynchronous}

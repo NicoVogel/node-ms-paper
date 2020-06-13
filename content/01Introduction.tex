@@ -1,0 +1,36 @@
+%!TEX root = ../dokumentation.tex
+\chapter{Introduction}\label{cha:Introdction}
+
+Building applications with a microservice architecture instead of taking a classic monolithic approach seems to be a popular mindset as of the time of writing.
+Likewise, the IDC has predicted that by 2022, \enquote{90{\%} of all new apps will feature microservice architectures~\cite{Columbus.20181104T12:45:03.42905:00}}.
+Not only does this development lead to a plethora of benefits, such as faster software delivery and flexibility~\cite[p.~15]{Newman.2015}, but also to an abundance of tools and frameworks.
+
+In a microservice environment, technology heterogenity is a key benefit, as different technology stacks can be used, in order to achieve higher performance, or simplify the development process.
+From a developer's perspective, one has to choose which technology should be adopted for each service, when transitioning to a microservice architecture~\cite[p.~20]{Newman.2015}.
+This means the selection of frameworks and tools for different aspects of the application, such as communication or monitoring for instance.
+
+Naturally, de facto industry standards have been established for certain parts in a microservice environment.
+Regarding the communication for instance, \ac{REST} for broker-less (orchestrated) systems and Apache Kafka for broker-based (choreographed) systems have become popular~\cite{NoorainPanjwani.2020}.
+Nonetheless, a software architecture should be developed from the according use case, in order to avoid unnecessary overhead and to benefit the most from a certain tool or framework.
+Therefore, a careful analysis and evaluation of possible options for each aspect needs to be done beforehand, including new or currently not often used technologies.
+
+\textbf{Problem Definition}\label{sec:ProblemDefinition}
+
+With a more widespread implementation of a microservice architecture, the possible combinations of technologies increases.
+Currently however, to the best of our knowledge, most written work about microservices either solely explain the concept with only some references to actual implementation (see \cite{Bruce.2019}, \cite{Newman.2015} and \cite{Newman.2019}) or they already dive into a specific programming language or base architecture, such as Python \cite{Ziade.2017} or \textit{node.js} \cite{Resende.2018}.
+Although nearly all of the above referenced literature for instance, provide exemplary implementations and suggest certain combinations regarding the architecture, the technologies are rarely juxtaposed and compared extensively to one another.
+
+As a consequence, architects either have to rely on their experience, which database type for instance would suit a certain use case the best or alternatively they would use de facto standards.
+Especially the latter option is not necessarily wrong; however, using containers for development for instance, might not necessarily improve the workflow, but introduce overhead instead, albeit the fact that more than 2 out of 3 developers use it (according to Ford \cite{Ford.2018}).
+
+In order to mitigate this issue, a practical tool-based overview and comparison may help in the decision process.
+Naturally, when evaluating potential technology constellations, a use case always needs to be selected in order to establish selection criteria.
+These criteria are based on personas, whose requirements have to be analyzed as well.
+Consequently, the aim of this work is to give an overview of available technologies in a microservice context.
+This is done by evaluating prototypic implementations against aforementioned criteria.
+Apart from that, the influence and consequences on components and stakeholders (as part of the personas) with a certain technology selection shall be presented as well.
+Finally a prototypic implementation is given, using the most beneficial technology for the use case, based on the previous findings about limitations and advantages of each option.
+
+In this work, the use case is a management application for gatherings of people with computers or game consoles (also known as a \enquote{LAN party}). As a base environment, \textit{node.js} has been selected due to its popularity and widespread use.
+As an example, according to a survey from The Software House, JavaScript is used in more than one in two cases \cite[p.~25]{Mamczur.2020}.
+Furthermore, as communication is an integral core part in microservice architecture, the overview given is limited to communication technologies and indirectly affected parts of the architecture, such as monitoring.

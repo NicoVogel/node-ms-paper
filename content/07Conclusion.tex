@@ -1,0 +1,29 @@
+%!TEX root = ../dokumentation.tex
+
+\chapter{Conclusion}\label{cha:Conclusion}
+
+With an increasing number of different libraries, frameworks and technologies in general, each attempting to better solve an existing problem, this work is likewise an approach to solve the problem of deciding between said technologies, by providing an overview and disclosing the thought process.
+This work introduces a selection of available technologies in the field of communication and monitoring, key aspects in driving a microservice architecture.
+In order to evaluate the features included in each framework, prototypical implementations were used to attain further insights for the final selection.
+
+Apart from the proof-of-concept implementations performed in chapter \ref{cha:Implementation}, the general requirements in a microservice environments are a key factor in shaping the selection.
+Consequently, practical experience was taken into consideration by conducting expert interviews, that showed that performance is one of the highest requirements for most of the personas presented in the requirement analysis.
+For the selection of technologies to be used in the exemplary LAN party application, \textit{RabbitMQ} was selected over \textit{Apache Kafka} for asynchronous inter-service communication, \textit{RESTful HTTP} over \textit{GraphQL} for synchronous frontend communication.
+Lastly \textit{Prometheus} was favored over \textit{Graphite}.
+An overview of each of the three aspects, including technologies that were considered unsuitable for this application, can be found in chapter \ref{cha:Technologies} in the tables \ref{tab:overviewSynchronousCommunication} [p. \pageref{tab:overviewSynchronousCommunication}], \ref{tab:overviewAsynchronousCommunication} [p. \pageref{tab:overviewAsynchronousCommunication}] and \ref{tab:comparisonmonitoring} [p. \pageref{tab:overviewAsynchronousCommunication}] respectively.
+
+Naturally, the selection is not complete and not all features were covered in the proof-of-concepts.
+Nonetheless, the selection made in chapter \ref{cha:Implementation} allowed for a fast implementation and confirmed the interoperability of the services using the technologies.
+
+
+\textbf{Outlook}
+
+After considering several communication and monitoring technologies, comparing several prototypes and building an exemplary application, the question remains open as to how to proceed further.
+Other topics such as gateways and message tracing still need to be compared.
+Popular gateways are for example \textit{Gateway-Apache} and \textit{Nginx}, which could be compared based on modularity, learning effort, available documentation and available extensions, like the prototypes of this work.
+The same applies for tracing, where \textit{Jaeger} and \textit{Zipkin} are popular.
+But there are also other fields than communication, such as \textit{code generation}, \textit{automatization} and \textit{static code analysis}, that leave room for comparison.
+
+Finally, although the exemplary application was not completed, it still provided a deeper insight into the practical use of communication technologies.
+All in all, the foundation can be considered as completed, while other aspects for a complete and coherent product are missing.
+

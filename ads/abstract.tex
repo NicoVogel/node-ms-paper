@@ -1,0 +1,32 @@
+%!TEX root = ../dokumentation.tex
+
+\pagestyle{empty}
+
+\iflang{de}{%
+	% Dieser deutsche Teil wird nur angezeigt, wenn die Sprache auf Deutsch eingestellt ist.
+	\renewcommand{\abstractname}{\langabstract} % Text für Überschrift
+
+	% \begin{otherlanguage}{english} % auskommentieren, wenn Abstract auf Deutsch sein soll
+	\begin{abstract}
+
+	\end{abstract}
+	% \end{otherlanguage} % auskommentieren, wenn Abstract auf Deutsch sein soll
+}
+
+
+
+\iflang{en}{%
+	% Dieser englische Teil wird nur angezeigt, wenn die Sprache auf Englisch eingestellt ist.
+	\renewcommand{\abstractname}{\langabstract} % Text für Überschrift
+
+	\begin{abstract}
+
+		This work focuses on the selection of microservice technologies in the field of communication and monitoring.
+		For the selection, persona requirements are identified and excerpts of currently available technologies presented for a preselection.
+		The selection was guided by the use case of a management application for gatherings of people (\enquote{LAN party}).
+		Following the preselection, proof-of-concepts were made for a better evaluation (except for the aspect monitoring), which resulted in the final selection being \textit{RabbitMQ (AMQP)} for asynchronous, \textit{RESTful HTTP} for synchronous communication and lastly \textit{Prometheus} for monitoring.
+		The exemplary implementation of said management application proved the interoperability and, albeit not having covered other aspects in a microservice environment, may serve as a guideline for future projects.
+
+		Further technologies presented were: \textit{gRPC, GraphQL (prototyped), NATS, Apache Kafka (prototyped), Graphite}
+	\end{abstract}
+}

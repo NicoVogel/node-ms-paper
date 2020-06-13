@@ -1,0 +1,168 @@
+% !TeX root = ../dokumentation.tex
+
+\addchap{\langanhang}
+
+\chapter{Expert interviews}
+\label{chp:appendix:interview}
+
+Two expert interviews were conducted as part of this work.
+The goal was to gain information on what is important as a member of a development team for a  distributed communication system.
+This information was used to shape the developer and operator personas.
+
+\paragraph{Developer interview}
+
+The interview was conducted on the 20.05.2020 with an managing solution architect.
+He has worked for 13 years, among others as software engineer and solution architect in projects with focus on API management, distributed architecture and integration systems.
+This interview is the reference \cite{ManagingSolutionArchitect.20.05.2020}.
+
+\paragraph{Operator interview}
+
+The interview was conducted on the 20.05.2020 with an enterprise architect for cloud based infrastructure.
+He has worked for 20 years, among others as project manager, lead architect and DevOps subject matter expert.
+This interview is the reference \cite{EnterpriseArchitectforcloudbasedinfrastructure.20.05.2020}.
+
+\pagebreak
+
+\chapter{Benchmark of asynchronous messaging prototypes}
+\label{chp:appendix:benchmark}
+
+Each asynchronous prototype needed to handle 10000 messages from one producer and these were distributed to 10 consumers.
+Both benchmark runs were executed on the same machine.
+The results from RabbitMQ (\ref{listing:rabbitbenchmark}) show one transmission with a sending time of 283 ms and average receiving time of 4630,3ms.
+In Apache Kafka there were three different producer implementations which were evaluated.
+\begin{itemize}
+    \item Type 1 (T1): each message was send and the response was immediately awaited.
+    \item Type 2 (T2): all messages were send, the promises were collected in an array and all awaited at once with \textit{Promise.all()}
+    \item Type 3 (T3): all messages were send and no response was awaited, except for the last response (which is the end signal)
+\end{itemize}
+
+The results from Apache Kafka are shown in \ref{listing:kafkabenchmark} and the following list shows on overview of the results.
+
+\begin{itemize}
+    \item T1: producer 42,7 s and consumer 42,7 s (average)
+    \item T2: producer 22,3 s and consumer 22,4 s (average)
+    \item T3: producer 21,6 s and consumer 21,7 s (average)
+\end{itemize}
+
+\begin{lstlisting}[caption=RabbitMQ benchmark results, label=listing:rabbitbenchmark]
+producer_1  | [2020-06-05 09:00:25]: start transmission
+producer_1  | [2020-06-05 09:00:25]: end transmission after 283ms
+consumer_9  | [2020-06-05 09:00:29]: done with receiving after 4577ms
+consumer_2  | [2020-06-05 09:00:29]: done with receiving after 4618ms
+consumer_7  | [2020-06-05 09:00:29]: done with receiving after 4642ms
+consumer_8  | [2020-06-05 09:00:29]: done with receiving after 4613ms
+consumer_4  | [2020-06-05 09:00:29]: done with receiving after 4613ms
+consumer_5  | [2020-06-05 09:00:29]: done with receiving after 4643ms
+consumer_6  | [2020-06-05 09:00:29]: done with receiving after 4636ms
+consumer_1  | [2020-06-05 09:00:29]: done with receiving after 4652ms
+consumer_3  | [2020-06-05 09:00:29]: done with receiving after 4660ms
+consumer_10 | [2020-06-05 09:00:29]: done with receiving after 4649ms
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Apache Kafka benchmark results, label=listing:kafkabenchmark]
+ producer_1   | [2020-06-05 08:38:41]: start Sending with T1
+ producer_1   | [2020-06-05 08:39:24]: done with T1 after 42727ms
+ consumer_1   | [2020-06-05 08:39:24]: done with [T1] after 42725ms
+ consumer_9   | [2020-06-05 08:39:24]: done with [T1] after 42727ms
+ consumer_8   | [2020-06-05 08:39:24]: done with [T1] after 42718ms
+ consumer_2   | [2020-06-05 08:39:24]: done with [T1] after 42724ms
+ consumer_4   | [2020-06-05 08:39:24]: done with [T1] after 42734ms
+ consumer_6   | [2020-06-05 08:39:24]: done with [T1] after 42734ms
+ consumer_7   | [2020-06-05 08:39:24]: done with [T1] after 42745ms
+ consumer_10  | [2020-06-05 08:39:24]: done with [T1] after 42747ms
+ consumer_5   | [2020-06-05 08:39:24]: done with [T1] after 42749ms
+ consumer_3   | [2020-06-05 08:39:24]: done with [T1] after 42755ms
+ 
+ producer_1   | [2020-06-05 08:40:24]: start Sending with T2
+ consumer_1   | [2020-06-05 08:40:49]: done with [T2] after 22378ms
+ consumer_8   | [2020-06-05 08:40:49]: done with [T2] after 22385ms
+ producer_1   | [2020-06-05 08:40:49]: done with T2 after 24396ms
+ consumer_5   | [2020-06-05 08:40:49]: done with [T2] after 22394ms
+ consumer_3   | [2020-06-05 08:40:49]: done with [T2] after 22397ms
+ consumer_6   | [2020-06-05 08:40:49]: done with [T2] after 22406ms
+ consumer_9   | [2020-06-05 08:40:49]: done with [T2] after 22398ms
+ consumer_4   | [2020-06-05 08:40:49]: done with [T2] after 22418ms
+ consumer_7   | [2020-06-05 08:40:49]: done with [T2] after 22437ms
+ consumer_2   | [2020-06-05 08:40:49]: done with [T2] after 22454ms
+ consumer_10  | [2020-06-05 08:40:49]: done with [T2] after 22541ms
+ 
+ producer_1   | [2020-06-05 08:42:50]: start Sending with T3
+ producer_1   | [2020-06-05 08:43:11]: done with T3 after 21600ms
+ consumer_8   | [2020-06-05 08:43:11]: done with [T3] after 21596ms 
+ consumer_4   | [2020-06-05 08:43:11]: done with [T3] after 21628ms 
+ consumer_6   | [2020-06-05 08:43:11]: done with [T3] after 21631ms 
+ consumer_7   | [2020-06-05 08:43:11]: done with [T3] after 21648ms 
+ consumer_9   | [2020-06-05 08:43:11]: done with [T3] after 21660ms 
+ consumer_1   | [2020-06-05 08:43:11]: done with [T3] after 21689ms 
+ consumer_5   | [2020-06-05 08:43:11]: done with [T3] after 21732ms 
+ consumer_3   | [2020-06-05 08:43:11]: done with [T3] after 21816ms 
+ consumer_10  | [2020-06-05 08:43:11]: done with [T3] after 21829ms 
+ consumer_2   | [2020-06-05 08:43:11]: done with [T3] after 21892ms 
+\end{lstlisting}
+
+\chapter{Overview of implemented events and endpoints}
+
+Listing \ref{chp:appendix:implementedEvent} shows all implemented events.
+
+\begin{table}
+    \centering
+    \begin{tabular}{ |l|l|l|l| }
+        \hline
+        Action                        & Topic                  & publisher & subscribers      \\
+        \hline
+        an account was created        & account.created        & Account   & Event, Billing   \\
+        \hline
+        an event was created          & event.created          & Event     & Account, Billing \\
+        a user registered to an event & event.register         & Event     & Billing          \\
+        \hline
+        open a new invoice            & billing.request        & Event     & Billing          \\
+        add entry to invoice          & billing.addToCart      & Event     & Billing          \\
+        remove entry to invoice       & billing.removeFromCart & -         & Billing          \\
+        update entry to invoice       & billing.replaceCart    & -         & Billing          \\
+        remove all entries to invoice & billing.emptyCart      & -         & Billing          \\
+        invoice complete              & billing.pending        & Event     & Billing          \\
+        invoice was payed             & billing.completed      & Billing   & Event            \\
+        \hline
+    \end{tabular}
+    \caption{Overview of all implemented events} \label{chp:appendix:implementedEvent}
+\end{table}
+
+Listing \ref{chp:appendix:implementedRest} shows all implemented REST endpoints.
+The path always starts with \textit{/api/<service name>}.
+
+\begin{table}
+    \centering
+    \begin{tabular}{ |l|l|l| }
+        \hline
+        Action                         & Path                             & REST operation \\
+        \hline
+        user login                     & /api/account/user/authenticate   & POST           \\
+        user register                  & /api/account/user/register       & POST           \\
+        get logged in user information & /api/account/user/current        & GET            \\
+        get specific user information  & /api/account/user/:id            & GET            \\
+        get all users information      & /api/account/user/               & GET            \\
+        update user information        & /api/account/user/:id            & PUT            \\
+        delete an user                 & /api/account/user/:id            & DELETE         \\
+        team login                     & /api/account/team/authenticate   & POST           \\
+        team register                  & /api/account/team/register       & POST           \\
+        get logged in team information & /api/account/team/current        & GET            \\
+        get specific team information  & /api/account/team/:id            & GET            \\
+        get all teams information      & /api/account/team/               & GET            \\
+        update team information        & /api/account/team/:id            & PUT            \\
+        delete a team                  & /api/account/team/:id            & DELETE         \\
+        \hline
+        pay a bill                     & /api/billing/pay                 & POST           \\
+        get all bills from a user      & /api/billing/:accountId          & GET            \\
+        get one bill from a user       & /api/billing/:accountId/:eventId & GET            \\
+        \hline
+        create an event                & /api/event/                      & POST           \\
+        register a user to an event    & /api/event/register              & POST           \\
+        finish registration of         & /api/event/confirm               & POST           \\
+        get all events                 & /api/event/                      & GET            \\
+        get one events                 & /api/event/:eventId              & GET            \\
+        \hline
+    \end{tabular}
+    \caption{Overview of all implemented REST endpoints} \label{chp:appendix:implementedRest}
+\end{table}
+
+

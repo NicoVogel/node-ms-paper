@@ -1,0 +1,40 @@
+%!TEX root = ../../dokumentation.tex
+
+
+There are different types and sizes for \ac{LAN} parties.
+The purpose of the \ac{LAN} party management application is to manage multiple \ac{LAN} parties over time.
+The general idea is that users can create an account, sign up for an upcoming \ac{LAN} party (or event) and participate with their account.
+Consequently, the application could contain the following components:
+
+\paragraph{Accounts} are used to identify a user.
+Multiple accounts can be grouped to form a team in an event.
+This is required for some games.
+
+\paragraph{Events} represent actual \ac{LAN} parties.
+They consist of information such as start/end date and a description.
+This information could be used for the registration page of an event.
+Events could be required to pay a registration fee, which is also part of this component.
+Finally, a form of attendee overview could be included.
+
+\paragraph{Scoreboard} is responsible for all matches.
+This component therefore contains the following information: participants, played game, used settings and the match result.
+It could also be used to manage the game server of the event and to start matches.
+
+\paragraph{Catering} could be part of an event.
+Therefore, a list of catering options within the event registration could be used to manage catering.
+The result would be an overview of the catering options, chosen by attendees.
+This would make it easier to order an actual catering service.
+
+\paragraph{Billing} is an essential part of an event.
+A registration is only complete once the registration fee and catering costs have been paid.
+A form of billing is therefore required.
+
+\paragraph{Seating plan} option would automate the process of seat selection.
+A participant could select a seat in the event room and reserve it in a similar way to reserving a seat in a cinema.
+
+These components/features are used as a general guide for creating the \ac{LAN} party application.
+Not every feature is required for every event.
+For example, an event might not provide an option for catering.
+
+Lastly, the \ac{LAN} party application architecture will be client-server based, where the client is a web browser.
+This modern approach allows for a platform independent use.

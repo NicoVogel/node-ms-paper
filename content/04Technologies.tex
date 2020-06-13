@@ -1,0 +1,22 @@
+%!TEX root = ../dokumentation.tex
+\chapter{Selection of Technologies for Prototyping}\label{cha:Technologies}
+
+One of the core aspects of a microservice architecture is the communication \cite[p.~60]{Bruce.2019}.
+This includes the inter-microservice communication but also the communication beyond the microservice environment to the client itself.
+Especially after the deployment, monitoring systems are crucial for operation, in order to collect metrics and observe the system \cite[p.~313]{Bruce.2019}.
+With a preceding research, criteria based on the requirements researched in chapter \ref{cha:Requirement} are used to determine, which technology should be tested through prototypes.
+
+\textbf{Researching Technologies}
+
+In order to select technologies and frameworks for development of prototypes for evaluation, research is needed in both aforementioned aspects of a microservice environment, namely communication and monitoring, to find possible technologies.
+Although other aspects, such as testing, project build and deployment, and engines are important, these are deliberately left out due to the timely boundaries of this work.
+In the following either practical implementations of protocols or complete frameworks for both aspects are presented briefly.
+
+\section{Communication}\label{cha:Technologies:communication}
+\input{./content/04Technologies/01Communication.tex}
+\pagebreak
+\section{Monitoring}\label{cha:Technologies:monitoring}
+\input{./content/04Technologies/02Monitoring.tex}
+\pagebreak
+\section{Selection}\label{cha:Technologies:selection}
+\input{./content/04Technologies/03Selection.tex}

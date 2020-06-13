@@ -1,0 +1,46 @@
+%!TEX root = ../../dokumentation.tex
+
+There are many combinations of technologies to implement an application based on microservices, but not every combination meets the requirements for such an application.
+Technologies must meet the requirements to be useful for an application.
+A common practice in web development is to define personas, which have requirements for an application \cite[p. 105]{Castro.2008}.
+A persona reflects the interests of a certain group of people.
+By defining several personas, several aspects for an application are considered.
+Personas have been successfully used in non-Web development projects \cite[P. 105]{Castro.2008} and are used in requirement analysis.
+
+In case of technologies comparison, suitable personas are \textbf{end-user}, \textbf{developer} and \textbf{operator}.
+These personas are selected based on the writer's knowledge.
+For an end-user, there are many factors that significantly influence the acceptance of the application \cite[p. 245]{Zhou.2008}, but only the performance expectancy can be influenced by communication technologies.
+The performance expectancy is important to determine interest of the end-user in the application \cite[p. 244]{Zhou.2008}.
+From the end-user's point of view, the application should be performant, so the communication technology must be performant as well.
+
+Developers are primarily interested in whether a communication technology contains all features they need to perform a task.
+Sometimes the customer decides which technology to use.
+This is the case when a developer is part of a consultant firm and the client has heard of a technology that he wants.
+In this case, sometimes a technology is chosen because the customer understands it or is used to it.
+When developers have a choice of which technology to use and several technologies contain all the necessary features, they evaluate which technology fits the scenario and meets the performance and scalability requirements the most.
+Finally, they consider usability features such as implementation effort and manageability.
+Therefore, from a developer's perspective, a communication technology is selected based on performance, scalability, functional requirements and ease of use \cite{ManagingSolutionArchitect.20.05.2020}.
+
+The last persona is the operator.
+For this persona, scaling and managing complexity of communication technology is most important.
+Features like historization and versioning are a must have and depending on the project, the communication flow must be configurable.
+Just like the developer, the operator points out that the customer plays a major role in the choice of communication technology and there is usually little or no choice. Another concern is resilience, which is also a key factor for microservices.
+Finally, non-functional requirements such as monitoring and traceability are also important.
+Therefore, from an operator perspective, a communication technology is selected based on scalability, resilience and the inclusion of some standard features \cite{EnterpriseArchitectforcloudbasedinfrastructure.20.05.2020}.
+
+After explaining the different needs of personas, Table \ref{tab:requirementsAnalysis} provides an overview of the important factors for each persona. It is used for the technology assessment.
+Further information about the interviews for the developer and operator can be found in the appendix at \ref{chp:appendix:interview}.
+
+\begin{table}
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		End-User    & Developer   & Operator    \\
+		\hline
+		Performance & Performance & Scalability \\
+		            & Scalability & Resilience  \\
+		            & Ease of use &             \\
+		\hline
+	\end{tabular}
+	\caption{Requirement Analysis Overview} \label{tab:requirementsAnalysis}
+\end{table}

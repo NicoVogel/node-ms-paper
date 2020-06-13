@@ -1,0 +1,171 @@
+%!TEX root = ../../dokumentation.tex
+
+\subsection{Synchronous Communication}\label{cha:Technologies:selection:synchronous}
+
+When comparing the three presented synchronous messaging technology, \textit{gRPC} is the most performant, thus fulfilling the requirements of the user and developer (cf. chapter \ref{cha:Requirement:persona}) the most.
+Its binary format (\textit{protocol buffer}), as opposed to \ac{JSON} used in \textit{GraphQL} and \ac{REST}, is more efficient and beneficial in cases with low network throughput or limited resources.
+However, due to missing official support of \textit{gRPC-Web} and due to its incomplete implementation, communication between the web-based frontend and any backend can only be achieved with \ac{REST} and \textit{GraphQL}.
+Consequently \textit{gRPC} could only be used for backend communication in this use case.
+
+\begin{table}[h!]
+	\begin{tabularx}{\linewidth}{ |l| X | X | X | }
+		\hline
+		&
+		RESTful HTTP & GraphQL                                                                   & gRPC                                                                                                                                                                      \\
+		\hline
+		Protocols   & Synchronous communication over HTTP only                                  & Synchronous or asynchronous in multiple protocols (e.g. HTTP, AMQP, MQTT)           & Synchronous communication in HTTP2 (although asynchronous implementation available) \\
+		Design      & HTTP (verbs, links, status codes)                                         & Based on exchanging messages                                                        & Messages (e.g. protocol buffer payload)                                             \\
+		Standards   & Multiple standards available (e.g. Richardson Maturity Model, OpenAPI)    & Schema definition as a standard (\ac{IDL}) Strongly typed                           & Service definition in protocol buffer file for instance (strongly typed as well)    \\
+		Payload     & \ac{JSON} for instance                                                    & \ac{JSON}                                                                           & Serialized in binary(default is protocol buffer)                                    \\
+		Integration & Nearly every client                                                       & Specific implementation in clients needed (wrapping in \ac{HTTP} endpoint possible) & Specific and tightly coupled implementation for clients needed                      \\
+		Endpoint    & Endpoints need to be known, hypermedia possible with HATEOAS for instance & Single endpoint, self-describing scheme                                             & Concrete methods have to exist on both sides                                        \\
+		Scaling     & Easy to scale due to stateless nature                                     & Scaling only limited by data source access bottlenecks                              & Scaling similar to REST as HTTP2 is used                                            \\
+		\hline
+	\end{tabularx}
+	\caption{Overview synchronous communication \cite{Rocha.2019}}
+	\label{tab:overviewSynchronousCommunication}
+\end{table}
+
+Regarding the scalability of the application, all three technologies excel and provide high performance endpoint access.
+Load balancing is possible with all three of them with \textit{gRPC} being the most advanced due to HTTP2.
+Another aspect is the ease of use and the maintainability of the protocol.
+Contrary to the loosely specified \ac{REST}, both \textit{GraphQL} and \textit{gRPC} provide strong typing by enforcing schema/service definitions.
+This makes validation and error handling easier for both sides.
+Although having specified schemes, \textit{GraphQL} is the most flexible compared to \textit{gRPC}, due to its nature being an \ac{RPC} framework.
+With \textit{gRPC}, concrete methods and response actions have to be implemented, while also having to update the client when changes occur.
+Consequently \textit{gRPC} introduces tight coupling between services.
+On the other side is \textit{GraphQL} with a flexible requests and an introspective, self-describing single endpoint.
+\ac{REST}, however fares worse in comparison, as there are no endpoint specifications per default and issues such as over- and underfetching may occur.
+
+Tight coupling in a microservice may not be necessarily bad practice, as it can bring benefits in a tightly coupled network of services, such as low latency and high efficiency found in \textit{gRPC} \cite{Esposito.2019}.
+However, in the case of the exemplary use case in this work, loose coupling is better with a modular approach for adding new components to the application.
+This renders \textit{gRPC} with its coupling by design disadvantageous, compared to \textit{GraphQL} and \ac{REST}.
+
+In conclusion, \textit{gRPC} represents a highly efficient but tightly coupled system, whereas \textit{GraphQL} allows flexible and maintainable data queries and RESTful \ac{HTTP} being a widespread used, but less standardized and possibly less efficient way of messaging.
+An overview is given in the Table \ref{tab:overviewSynchronousCommunication}.
+
+Albeit \textit{gRPC} being developed out of the need for performant and low latency microservice communication, the support for the component in the architecture with the most intensive synchronous communication, namely frontend to backend is incomplete \cite{gRPCAuthors.01.06.2020}.
+Regarding inter-service communication, in which \textit{gRPC} dominates and \textit{GraphQL} on the other hand is unsuited, broker-based communication may be preferable.
+This is due to the fact that the different components are emitting events affecting multiple other components, instead of just having to trigger a function with a point to point connection like with \ac{RPC} (e.g. ending a match affects both the component \textit{Scoreboard} and \textit{Events}, cf. chapter \ref{cha:Requirement:lanpartyapplication}).
+All things considered \ac{REST} and \textit{GraphQL} are prototyped and evaluated in this work, although \textit{gRPC} might be an option to be considered in the future for this use case, with coming web application support.
+
+
+\pagebreak
+
+\subsection{Asynchronous Communication}\label{cha:Technologies:selection:asynchronous}
+
+If one compares the three asynchronous messaging technologies presented, \ac{NATS} is the most performant and thus meets the requirements of the personas (cf. chapter \ref{cha:Requirement:persona}) the most.
+In a benchmark comparison between \ac{NATS} Streaming and \textit{Apache Kafka}, \ac{NATS} Streaming was faster in almost all tests \cite{TylerTreat.2016}.
+However, this performance has its price, as \ac{NATS} does not persist messages.
+Therefore, they are lost if no consumer listens for them.
+On the other hand, \textit{RabbitMQ} provides mechanisms to route messages that are not read, and \textit{Apache Kafka} stores the messages, which eliminates the problem altogether.
+
+\begin{table}[h!]
+	\begin{tabularx}{\linewidth}{ |l| X | X | X | }
+		\hline                                                                                            &   
+		RabbitMQ                                                                                          &   
+		NATS                                                                                              &   
+		Apache Kafka                                                                                        \\
+																
+		\hline
+		Protocol                                                                                          &   
+		\ac{AMQP}, \ac{MQTT} and \ac{STOMP}                                                               &   
+		NATS                                                                                              &   
+		Kafka                                                                                               \\
+																
+		Communication                                                                                     &   
+		Publish-Subscribe and Queue                                                                       &   
+		Publish-Subscribe, Queue and Request-Response                                                     &   
+		Publish-Subscribe, Queue and Streaming                                                              \\
+																
+		Payload                                                                                           &   
+		\ac{AMQP} and \ac{MQTT} is binary and \ac{STOMP} is plain text                                    &   
+		plain text                                                                                        &   
+		developer can choose \cite{RobinMoffatt.2018}                                                          \\
+																
+		Quality of Service                                                                                &   
+		\textit{at-most-once}, \textit{at-least-once} and \textit{exactly once} \cite{PaoloPatierno.2018} &   
+		\textit{at-most-once} and \textit{at-least-once} (if \textit{NATS Streaming} is used)             &   
+		\textit{at-most-once} and \textit{at-least-once} \cite{AjmalKaruthakantakath.2016}                  \\
+		Queue Storage                                                                                     &   
+		Limited                                                                                           &   
+		None                                                                                              &   
+		Permanent                                                                                           \\
+		\hline
+	\end{tabularx}
+	\caption{Overview asynchronous communication}
+	\label{tab:overviewAsynchronousCommunication}
+\end{table}
+
+All three technologies provide a sophisticated scaling solution that enables high availability.
+Another aspect is usability, which is difficult to measure because it is subjective.
+To simplify this, only the complexity of available commands is used as a measurement.
+This leaves \textit{RabbitMQ} with the \ac{AMQP} protocol behind \ac{NATS} and \textit{Apache Kafka}, because connecting to a queue or exchange requires extensive configuration.
+On the other hand, \ac{NATS} and \textit{Apache Kafka} strive for a simple interface \cite[p.~8]{Quevedo.2018} \cite[p.~18]{Stopford.2018}.
+However, \textit{RabbitMQ} also supports \ac{MQTT} and \ac{STOMP} via plugin, which simplifies the necessary configuration.
+It is important to note that simplicity does not mean that only simple structures are possible.
+As far as resilience is concerned, each technology has its own clues to ensure it.
+Interesting features include \textit{Apache Kafka} \textit{quotas} \cite[p.~21]{Stopford.2018} and the fact that \ac{NATS} will break connections if the consumer becomes too slow \cite[p.~9]{Quevedo.2018}.
+
+From the persona perspective, \ac{NATS} and \textit{Apache Kafka} would be selected, but it is also important that the technologies fits the exemplary use case in this work.
+The components of the use case were presented in the requirement analysis (cf. chapter \ref{cha:Requirement:lanpartyapplication}).
+The communication between them is the important aspect when choosing an asynchronous messaging technology.
+There is no obvious communication scenario in which extreme performance would be required.
+Even if, for example, the \textit{billing} component takes 10 seconds to communicate with the \textit{event} component, no problem should occur.
+Therefore, the components should work independently of each other, and eventual consistency is acceptable if the communication provides the \ac{QoS} \textit{at-least-once}.
+
+In summary, \textit{RabbitMQ} and \textit{Apache Kafka} meet the requirements "out of the box", and if \textit{NATS Streaming} is used instead of \ac{NATS}, all three technologies can be used.
+However, selection is required, so \ac{NATS} is not selected because it does not provide the required functionality out of the box.
+
+\subsection{Monitoring}\label{cha:Technologies:selection:monitoring}
+
+Regarding the monitoring of a microservice environment, important aspects are the performance, ease of use and the resilience of the system. (cf. chapter \ref{cha:Requirement:persona})
+Another aspect is the scalability, which, due to the limited options of horizontal scaling for both options, is neglected here.
+Both technologies do allow scaling via sharding and/or federation mechanisms, which, however, creates disadvantageous coupling.
+
+The ease of use overall is greater with \textit{Prometheus}  than with \textit{Graphite} , due to the larger compatibility with various client services.
+It should be noted however, that the initial setup and metric pushing is easier with \textit{Graphite}  due to the raw communication protocols.
+Especially with simpler services to be monitored, or short running jobs, avoiding heavy \ac{HTTP} handling is favorable.
+Moreover the push based metric collection in \textit{Graphite}, allows it to be flexible, as it does not need a service discovery, which \textit{Prometheus}  needs to avoid static endpoint links \cite{Erez.2019}.
+
+
+However, the relatively more complicated manual integration of instrumentation libraries in order to export metrics in the \textit{Prometheus}  message format, can be neglected, as third-party exporters are available.
+This extensibility with metric exporters, which allow very easy integration of services, make \textit{Prometheus}  more favorable in a possibly highly diverse and polyglot microservice environment.
+Although this does cause additional dependencies and requires \textit{Prometheus}  to
+run inside the same network, due to the pull strategy unlike \textit{Graphite} , the higher performance of \textit{Prometheus}  is overweighing.
+\textit{Graphite} 's ingestion process for example be overwhelmed, when sending a lot of datapoints, rendering the pushing concept disadvantageous \cite{Erez.2019}\cite{Frazier.2019}.
+
+\begin{table}[h!]
+	\begin{tabularx}{\linewidth}{ | l | X | X | }
+		\hline
+		Feature                 & Prometheus                                                           & Graphite                                                       \\
+		\hline
+		Metric input            & Server scrapes/pulls metrics from clients                            & Metrics are pushed to Graphite                                 \\
+		Communication protocols & HTTP-based endpoint                                                  & TCP, UDP, AMQP                                                 \\
+		Metric discovery        & Service discovery with Kubernetes for instance                       & no client discovery                                            \\
+		Metric naming scheme    & Naming system using labels (key-value)                               & Hierarchical dot notation                                      \\
+		Data operations         & Prometheus Query Language \textit{PromQL}                            & Graphite Functions                                             \\
+		Client support          & More complicated initial setup, but many exporters available already & Simple metric export, but fewer support. Custom scripts needed \\
+		\hline
+	\end{tabularx}
+	\caption{Comparison monitoring Graphite and Prometheus \cite{Erez.2019}\cite{Frazier.2019}\cite{Berman.2018}}
+	\label{tab:comparisonmonitoring}
+\end{table}
+
+When comparing the resilience, \textit{Graphite} 's push strategy forces clients having to update the endpoint, when changes occur to the monitoring system, making a failover less flexible.
+While \textit{Graphite}  does support external storage clusters and thus provide redundancy, autonomous \textit{Prometheus}  instances do not support any type of redundancy when a cluster fails, as any metric requests have to pass through \textit{Prometheus} , regardless of the data source.
+On the other hand, \textit{Prometheus}  provides inbuilt monitoring of containers, essential to microservices.
+Moreover, \textit{Prometheus}  is able to monitor uptime through the metric scraping/pulling process \cite{Berman.2018}\cite{Erez.2019}.
+
+To conclude, \textit{Prometheus}  has various benefits such as an ecosystem of exporters and client instrumentation, which reduces the more complex nature of \textit{Prometheus} .
+On the contrary, \textit{Graphite}  has a simpler format and communication structure, partly due to the incorporated push strategy.
+A brief comparison overview can also be found in Table \ref{tab:comparisonmonitoring}.
+For the microservice architecture to be built in this work, \textit{Prometheus}  is chosen, due to the integration capabilities with other services through modular exporters, the service discovery capabilities and the higher performance.
+The aforementioned traits are essential in an application like a \ac{LAN} party management tool, where high user interaction with a diverse backend occurs.
+Additionally there are other topics of \textit{Prometheus} , which are not covered here, but are important for this specific use case, namely event tracking, alarming and the extensive query language \textit{PromQL}.
+
+A prototypic implementation for both technologies, however, is left out in the following, as monitoring is highly variable regarding the architecture.
+Each monitoring solution might work better, depending on the metrics to be monitored and the used technologies.
+As each technology has different metric reporting solutions for delivering or exporting data to corresponding monitoring technologies, an evaluation whether \textit{Graphite}  or \textit{Prometheus}  would work best, can only be done after selecting other components in a microservice environment.
+The communication technology and services for the exemplary application however, still have to be evaluated with prototypes.
+Consequently the choice for \textit{Prometheus}  made here should be considered with caution, and may not be applicable to every microservice environment.
