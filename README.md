@@ -5,6 +5,8 @@ This document was created as part of a student work
 
 The code can be found at https://github.com/NicoVogel/node-ms
 
+The other contributer is https://github.com/vietd24
+
 ## Abstract
 
 This work focuses on the selection of microservice technologies in the field of communication and monitoring.
