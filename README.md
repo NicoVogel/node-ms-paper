@@ -5,7 +5,7 @@ This document was created as part of a student work
 
 The code can be found at https://github.com/NicoVogel/node-ms
 
-The other contributer is https://github.com/vietd24
+The other contributor is [@vietd24](https://github.com/vietd24) 
 
 ## Abstract
 
